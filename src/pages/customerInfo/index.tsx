@@ -76,9 +76,8 @@ const CustomerInfo = () => {
       </div>
 
       <div className="flex flex-wrap">
-        
-      {/* if searching */}
-      {/* <div className="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
+        {/* if searching */}
+        {/* <div className="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
         <div className="border-t-transparent border-solid animate-spin  rounded-full border-blue-400 border-8 h-64 w-64"></div>
       </div> */}
 
@@ -135,13 +134,13 @@ const CustomerInfo = () => {
               <p className="text-sm text-gray-500 dark:text-white">
                 Outstanding
               </p>
-              <p className="text-primary text-sm font-medium">$399</p>
+              <p className="text-primary text-sm font-medium">$199</p>
             </div>
             <div className="flex justify-between mt-2">
               <p className="text-sm text-gray-500 dark:text-white">
                 Billing month
               </p>
-              <p className="ext-gray-500 text-sm font-medium">October</p>
+              <p className="ext-gray-500 text-sm font-medium">September</p>
             </div>
             <div className="flex justify-between mt-2">
               <p className="text-sm text-gray-500 dark:text-white">Due Date</p>
@@ -169,7 +168,7 @@ const CustomerInfo = () => {
               <div className="flex flex-wrap -mx-3">
                 <div className="flex items-center flex-none w-1/2 max-w-full px-3">
                   <span className="font-bold text-lg text-black dark:text-white ml-2">
-                    Invoices
+                    Billing History
                   </span>
                 </div>
                 {/* <div className="flex-none w-1/2 max-w-full px-3 text-right">
@@ -184,40 +183,40 @@ const CustomerInfo = () => {
                 <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-t-inherit text-inherit rounded-xl">
                   <div className="flex flex-col">
                     <h6 className="mb-1 text-sm font-semibold leading-normal dark:text-white text-slate-700">
-                      March, 01, 2020
+                      September, 30, 2022
                     </h6>
                     <span className="text-xs leading-tight dark:text-white dark:opacity-80">
-                      #MS-415646
+                      #KF-0004
                     </span>
                   </div>
                   <div className="flex items-center text-sm leading-normal dark:text-white/80">
-                    $180
+                    $110
                   </div>
                 </li>
                 <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-xl text-inherit">
                   <div className="flex flex-col">
                     <h6 className="mb-1 text-sm font-semibold leading-normal dark:text-white text-slate-700">
-                      February, 10, 2021
+                      August, 31, 2022
                     </h6>
                     <span className="text-xs leading-tight dark:text-white dark:opacity-80">
-                      #RV-126749
+                      #KF-0003
                     </span>
                   </div>
                   <div className="flex items-center text-sm leading-normal dark:text-white/80">
-                    $250
+                    $100
                   </div>
                 </li>
                 <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-xl text-inherit">
                   <div className="flex flex-col">
                     <h6 className="mb-1 text-sm font-semibold leading-normal dark:text-white text-slate-700">
-                      April, 05, 2020
+                      July, 31, 2022
                     </h6>
                     <span className="text-xs leading-tight dark:text-white dark:opacity-80">
-                      #FB-212562
+                      #KF-0002
                     </span>
                   </div>
                   <div className="flex items-center text-sm leading-normal dark:text-white/80">
-                    $560
+                    $100
                   </div>
                 </li>
               </ul>
