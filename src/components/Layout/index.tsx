@@ -1,10 +1,14 @@
 import SideBar from "../../components/SideBar";
+import Header from "../Header";
 
 const Layout = ({ children }: any) => {
   return (
-    <div className="font-body text-base font-normal dark:bg-slate-900 bg-gray-50 text-slate-500">
+    <div className="font-body text-base font-normal dark:bg-slate-900 bg-gray-50 text-slate-500 py-8">
       <SideBar />
-      <div className="xl:ml-72 xl:mt-10">{children}</div>
+      <div className="xl:ml-72 xl:mr-11 h-screen">
+        <Header />
+        <div className="pt-28 px-4">{children}</div>
+      </div>
     </div>
   );
 };

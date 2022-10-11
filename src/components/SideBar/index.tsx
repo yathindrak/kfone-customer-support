@@ -2,20 +2,20 @@ import { GiCrossedAirFlows } from "react-icons/gi";
 import {
   FcComboChart,
   FcCustomerSupport,
-  FcFaq,
-  FcServices,
+  FcViewDetails,
+  FcServices
 } from "react-icons/fc";
 import SideBarMenuItem from "../SideBarMenuItem";
 
 const menuItems = [
   { name: "Dashboard", icon: <FcComboChart size={20} />, url: "/" },
+  { name: "Cases", icon: <FcViewDetails size={20} />, url: "/cases" },
   {
     name: "Customer Info",
     icon: <FcCustomerSupport size={20} />,
     url: "/customer-info",
   },
-  { name: "Services", icon: <FcServices size={20} />, url: "/services" },
-  { name: "FAQ", icon: <FcFaq size={20} />, url: "/faq" },
+  // { name: "Services", icon: <FcServices size={20} />, url: "/services" },
 ];
 
 const SideBar = () => {

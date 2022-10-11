@@ -38,7 +38,7 @@ const cases = [
   },
 ];
 
-const Services = () => {
+const Cases = () => {
   return (
     <Layout>
       <div className="flex flex-wrap">
@@ -89,4 +89,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default Cases;
