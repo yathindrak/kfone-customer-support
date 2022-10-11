@@ -151,7 +151,7 @@ const CustomerInfo = () => {
 
         <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
           <div className="shadow-lg rounded-2xl p-4 bg-white relative overflow-hidden">
-            <p className="text-gray-800 text-lg font-medium mb-2">Usage</p>
+            <p className="text-gray-800 text-lg font-bold mb-2">Usage</p>
             <p className="text-gray-500 text-md font-base my-4">
               <span className="font-medium">35.1GB</span> used of{" "}
               <span className="font-medium">82.0GB</span>

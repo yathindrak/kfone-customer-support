@@ -11,7 +11,7 @@ const menuItems = [
   { name: "Dashboard", icon: <FcComboChart size={20} />, url: "/" },
   { name: "Cases", icon: <FcViewDetails size={20} />, url: "/cases" },
   {
-    name: "Customer Info",
+    name: "Connections",
     icon: <FcCustomerSupport size={20} />,
     url: "/customer-info",
   },
