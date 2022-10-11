@@ -22,46 +22,69 @@ const Header = () => {
           <h1 className="text-xl font-semibold text-slate-700">
             Good {getTimeOfDay()}, Yathindra
           </h1>
-          <a href="#">
-            {/* <img
+
+          <div className="relative">
+            <button id="dropdownDefault" data-dropdown-toggle="dropdown">
+              {/* <img
                 alt="profil"
                 src="/favicon.ico"
                 className="mx-auto object-cover rounded-full h-10 w-10 "
               /> */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="45px"
-              height="45px"
-              viewBox="0 0 64 64"
-              version="1.1"
-            >
-              <circle
-                fill="#E60000"
-                width="64"
-                height="64"
-                cx="32"
-                cy="32"
-                r="32"
-              />
-              <text
-                x="50%"
-                y="50%"
-                style={{
-                  color: "#ffffff",
-                  lineHeight: "1",
-                }}
-                alignment-baseline="middle"
-                text-anchor="middle"
-                font-size="26"
-                font-weight="400"
-                dy=".1em"
-                dominant-baseline="middle"
-                fill="#ffffff"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="45px"
+                height="45px"
+                viewBox="0 0 64 64"
+                version="1.1"
               >
-                YK
-              </text>
-            </svg>
-          </a>
+                <circle
+                  fill="#E60000"
+                  width="64"
+                  height="64"
+                  cx="32"
+                  cy="32"
+                  r="32"
+                />
+                <text
+                  x="50%"
+                  y="50%"
+                  style={{
+                    color: "#ffffff",
+                    lineHeight: "1",
+                  }}
+                  alignment-baseline="middle"
+                  text-anchor="middle"
+                  font-size="26"
+                  font-weight="400"
+                  dy=".1em"
+                  dominant-baseline="middle"
+                  fill="#ffffff"
+                >
+                  YK
+                </text>
+              </svg>
+            </button>
+
+            <div
+              id="dropdown"
+              className=" absolute right-1 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+            >
+              <ul
+                className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdownDefault"
+              >
+                <li>
+                  <a
+                    href="#"
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Sign out
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
         </div>
       </div>
     </header>
