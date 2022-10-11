@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const getTimeOfDay = () => {
     const date = new Date();
     const hours = date.getHours();
@@ -24,7 +28,11 @@ const Header = () => {
           </h1>
 
           <div className="relative">
-            <button id="dropdownDefault" data-dropdown-toggle="dropdown">
+            <button
+              id="dropdownDefault"
+              data-dropdown-toggle="dropdown"
+              onClick={() => setIsOpen(!isOpen)}
+            >
               {/* <img
                 alt="profil"
                 src="/favicon.ico"
@@ -65,25 +73,26 @@ const Header = () => {
               </svg>
             </button>
 
-            <div
-              id="dropdown"
-              className=" absolute right-1 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
-            >
-              <ul
-                className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownDefault"
+            {isOpen && (
+              <div
+                id="dropdown"
+                className=" absolute right-1 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
               >
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Sign out
-                  </a>
-                </li>
-              </ul>
-            </div>
-
+                <ul
+                  className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                  aria-labelledby="dropdownDefault"
+                >
+                  <li>
+                    <a
+                      href="#"
+                      className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Sign out
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
