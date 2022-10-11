@@ -16,7 +16,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed mt-4 m-auto ml-3 w-11/12 xl:w-3/4 shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-2xl">
+    <header className="fixed mt-4 m-auto ml-3 w-11/12 xl:w-3/4 shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-2xl z-20">
       <div className="flex h-full px-3">
         <div className="justify-between items-center pl-2 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">
           <h1 className="text-xl font-semibold text-slate-700">
