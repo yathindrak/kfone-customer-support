@@ -1,13 +1,23 @@
-import SideBar from "./components/SideBar";
+import { RouterProvider } from "react-router-dom";
+import { AuthProvider, Storage } from "@asgardeo/auth-react";
+import { router } from "./router/router";
 import "./App.css";
 
 const App = () => {
   return (
-    <div className="font-body text-base font-normal dark:bg-slate-900 bg-gray-50 text-slate-500">
-      <div className="absolute w-full bg-blue-500 h-80" />
-
-      <SideBar />
-    </div>
+    <AuthProvider
+      config={{
+        signInRedirectURL: process.env.REACT_APP_ASGARDEO_CALLBACK_URL ?? "",
+        signOutRedirectURL: process.env.REACT_APP_ASGARDEO_CALLBACK_URL ?? "",
+        clientID: process.env.REACT_APP_ASGARDEO_CLIENT_ID ?? "",
+        baseUrl: process.env.REACT_APP_ASGARDEO_BASE_URL ?? "",
+        scope: ["openid", "profile"],
+        storage: "webWorker" as Storage.WebWorker
+      }}
+    >
+      {/* @ts-ignore */}
+     <RouterProvider router={router} />
+    </AuthProvider>
   );
 };
 

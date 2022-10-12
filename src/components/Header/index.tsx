@@ -1,7 +1,14 @@
+import { useAuthContext } from "@asgardeo/auth-react";
 import { useState } from "react";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { signOut } = useAuthContext();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("isAuth");
+    signOut();
+  };
 
   const getTimeOfDay = () => {
     const date = new Date();
@@ -83,12 +90,12 @@ const Header = () => {
                   aria-labelledby="dropdownDefault"
                 >
                   <li>
-                    <a
-                      href="#"
+                    <span
+                      onClick={handleLogout}
                       className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       Sign out
-                    </a>
+                    </span>
                   </li>
                 </ul>
               </div>
