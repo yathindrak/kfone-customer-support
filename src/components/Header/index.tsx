@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed mt-4 m-auto ml-3 xl:ml-8 w-11/12 xl:w-3/4 shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-2xl z-20">
+    <header className="fixed mt-4 m-auto ml-3 xl:ml-5 w-11/12 xl:w-3/4 shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-lg z-20">
       <div className="flex h-full px-3">
         <div className="justify-between items-center pl-2 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">
           <h1 className="text-xl font-semibold text-slate-700">
@@ -76,7 +76,7 @@ const Header = () => {
             {isOpen && (
               <div
                 id="dropdown"
-                className=" absolute right-1 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+                className=" absolute right-1 z-10 w-44 bg-white rounded-lg divide-y divide-gray-100 shadow dark:bg-gray-700"
               >
                 <ul
                   className="py-1 text-sm text-gray-700 dark:text-gray-200"
