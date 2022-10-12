@@ -12,11 +12,11 @@ const App = () => {
         clientID: process.env.REACT_APP_ASGARDEO_CLIENT_ID ?? "",
         baseUrl: process.env.REACT_APP_ASGARDEO_BASE_URL ?? "",
         scope: ["openid", "profile"],
-        storage: "webWorker" as Storage.WebWorker
+        disableTrySignInSilently: false
       }}
     >
       {/* @ts-ignore */}
-     <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </AuthProvider>
   );
 };

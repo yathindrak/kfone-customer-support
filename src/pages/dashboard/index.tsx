@@ -9,10 +9,10 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useAuthContext, Hooks } from "@asgardeo/auth-react";
+import { AsgardeoAuthException, useAuthContext } from "@asgardeo/auth-react";
 import Layout from "../../components/Layout";
 import Message from "../../components/Message";
-import { MutableRefObject, useEffect, useRef } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import Loader from "../../components/Loader";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -128,19 +128,29 @@ const messages = [
 ];
 
 const Dashboard = () => {
-  const { state, signIn } = useAuthContext();
+  const { state, signIn, getAccessToken, getDecodedIDPIDToken } =
+    useAuthContext();
   const reRenderCheckRef: MutableRefObject<boolean> = useRef(false);
   const query = new URLSearchParams(useLocation().search);
 
   useEffect(() => {
-    if (reRenderCheckRef.current || query.get("code")) {
-      return;
-    }
-
     reRenderCheckRef.current = true;
 
     (async (): Promise<void> => {
-      await signIn();
+      try {
+        const now = Math.floor(Date.now() / 1000);
+        const decodedIDtoken = await getDecodedIDPIDToken();
+        const expiration = decodedIDtoken?.exp;
+        if (now < expiration && !query.get("code")){
+          await signIn();
+        }
+      } catch (error) {
+        if (
+          (error as AsgardeoAuthException)?.code === "SPA-AUTH_CLIENT-VM-IV02" &&  !query.get("code")
+        ) {
+          await signIn();
+        }
+      }
     })();
   }, []);
 
@@ -171,7 +181,7 @@ const Dashboard = () => {
 
                 <div className="shadow-lg rounded-lg p-4 bg-white dark:bg-gray-700 w-5/12">
                   <p className="font-bold text-md text-black dark:text-white">
-                    Messages
+                    Customer Messages
                   </p>
                   <ul>
                     {messages.map((message) => (

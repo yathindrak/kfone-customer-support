@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { signOut } = useAuthContext();
+  const { signOut, state } = useAuthContext();
 
   const handleLogout = () => {
     sessionStorage.removeItem("isAuth");
@@ -27,12 +27,14 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed mt-4 m-auto ml-3 xl:ml-5 w-11/12 xl:w-3/4 shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-lg z-20">
+    <header className="fixed mt-4 m-auto ml-3 xl:ml-5 w-11/12 xl:w-3/4 shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-lg z-99">
       <div className="flex h-full px-3">
         <div className="justify-between items-center pl-2 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">
-          <h1 className="text-xl font-semibold text-slate-700">
-            Good {getTimeOfDay()}, Yathindra
-          </h1>
+          {state?.displayName && state?.displayName.split(" ") && (
+            <h1 className="text-xl font-semibold text-slate-700">
+              Good {getTimeOfDay()}, {state?.displayName.split(" ")[0]}
+            </h1>
+          )}
 
           <div className="relative">
             <button
@@ -75,7 +77,8 @@ const Header = () => {
                   dominant-baseline="middle"
                   fill="#ffffff"
                 >
-                  YK
+                  {/* @ts-ignore */}
+                  {state?.displayName?.split(" ") && (state.displayName.split(" ").shift().charAt(0) + state?.displayName.split(" ").pop().charAt(0)).toUpperCase()}
                 </text>
               </svg>
             </button>
