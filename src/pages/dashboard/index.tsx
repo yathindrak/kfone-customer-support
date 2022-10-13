@@ -141,10 +141,11 @@ const Dashboard = () => {
         const now = Math.floor(Date.now() / 1000);
         const decodedIDtoken = await getDecodedIDPIDToken();
         const expiration = decodedIDtoken?.exp;
-        if (now < expiration && !query.get("code")){
+        if (now > expiration && !query.get("code")){
           await signIn();
         }
       } catch (error) {
+        console.log("error occured", error)
         if (
           (error as AsgardeoAuthException)?.code === "SPA-AUTH_CLIENT-VM-IV02" &&  !query.get("code")
         ) {

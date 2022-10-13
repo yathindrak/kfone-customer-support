@@ -55,7 +55,7 @@ const Cases = () => {
         const now = Math.floor(Date.now() / 1000);
         const decodedIDtoken = await getDecodedIDPIDToken();
         const expiration = decodedIDtoken?.exp;
-        if (now < expiration && !query.get("code")){
+        if (now > expiration && !query.get("code")){
           await signIn();
         }
       } catch (error) {

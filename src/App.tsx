@@ -1,21 +1,16 @@
 import { RouterProvider } from "react-router-dom";
-import { AuthProvider, Storage } from "@asgardeo/auth-react";
+import { AuthProvider } from "@asgardeo/auth-react";
+import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
 import { router } from "./router/router";
 import "./App.css";
+import authConfig from "./config/auth";
 
 const App = () => {
   return (
     <AuthProvider
-      config={{
-        signInRedirectURL: process.env.REACT_APP_ASGARDEO_CALLBACK_URL ?? "",
-        signOutRedirectURL: process.env.REACT_APP_ASGARDEO_CALLBACK_URL ?? "",
-        clientID: process.env.REACT_APP_ASGARDEO_CLIENT_ID ?? "",
-        baseUrl: process.env.REACT_APP_ASGARDEO_BASE_URL ?? "",
-        scope: ["openid", "profile"],
-        disableTrySignInSilently: false
-      }}
+      config={authConfig as any}
+      plugin={TokenExchangePlugin.getInstance()}
     >
-      {/* @ts-ignore */}
       <RouterProvider router={router} />
     </AuthProvider>
   );
