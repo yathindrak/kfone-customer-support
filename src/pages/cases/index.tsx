@@ -44,11 +44,9 @@ const cases = [
 
 const Cases = () => {
   const { state, signIn, getDecodedIDPIDToken } = useAuthContext();
-  const reRenderCheckRef: MutableRefObject<boolean> = useRef(false);
   const query = new URLSearchParams(useLocation().search);
 
   useEffect(() => {
-    reRenderCheckRef.current = true;
 
     (async (): Promise<void> => {
       try {

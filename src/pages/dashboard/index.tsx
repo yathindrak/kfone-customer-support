@@ -128,19 +128,18 @@ const messages = [
 ];
 
 const Dashboard = () => {
-  const { state, signIn, getAccessToken, getDecodedIDPIDToken } =
+  const { state, signIn, getDecodedIDPIDToken } =
     useAuthContext();
-  const reRenderCheckRef: MutableRefObject<boolean> = useRef(false);
   const query = new URLSearchParams(useLocation().search);
 
   useEffect(() => {
-    reRenderCheckRef.current = true;
 
     (async (): Promise<void> => {
       try {
         const now = Math.floor(Date.now() / 1000);
         const decodedIDtoken = await getDecodedIDPIDToken();
         const expiration = decodedIDtoken?.exp;
+        console.log(now > expiration)
         if (now > expiration && !query.get("code")){
           await signIn();
         }
@@ -154,6 +153,7 @@ const Dashboard = () => {
       }
     })();
   }, []);
+  console.log(state)
 
   return (
     <>
