@@ -3,7 +3,8 @@ import {
   FcComboChart,
   FcCustomerSupport,
   FcViewDetails,
-  FcServices
+  FcServices,
+  FcSalesPerformance
 } from "react-icons/fc";
 import SideBarMenuItem from "../SideBarMenuItem";
 
@@ -11,9 +12,14 @@ const menuItems = [
   { name: "Dashboard", icon: <FcComboChart size={20} />, url: "/" },
   { name: "Cases", icon: <FcViewDetails size={20} />, url: "/cases" },
   {
-    name: "Connections",
+    name: "Customers",
     icon: <FcCustomerSupport size={20} />,
-    url: "/customer-info",
+    url: "/customers",
+  },
+  {
+    name: "Marketing",
+    icon: <FcSalesPerformance size={20} />,
+    url: "/marketing",
   },
   // { name: "Services", icon: <FcServices size={20} />, url: "/services" },
 ];

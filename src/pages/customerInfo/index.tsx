@@ -250,7 +250,7 @@ const CustomerInfo = () => {
                   </div>
                 )}
 
-                {userInfo?.billingData && (
+                {userInfo?.billingData?.currentBillingCycle && (
                   <div className="w-full max-w-full mb-4 pr-3 lg:w-1/3 lg:flex-none">
                     <div className="shadow-lg rounded-lg p-4 bg-white relative overflow-hidden">
                       <p className="text-gray-800 text-lg font-medium mb-2">
@@ -260,14 +260,18 @@ const CustomerInfo = () => {
                         <p className="text-sm text-gray-500 dark:text-white">
                           Outstanding
                         </p>
-                        <p className="text-primary text-sm font-medium">$199</p>
+                        <p className="text-primary text-sm font-medium">
+                          {currency.format(
+                            userInfo?.billingData?.currentBillingCycle?.amount
+                          )}
+                        </p>
                       </div>
                       <div className="flex justify-between mt-2">
                         <p className="text-sm text-gray-500 dark:text-white">
                           Billing month
                         </p>
                         <p className="ext-gray-500 text-sm font-medium">
-                          September
+                          {userInfo?.billingData?.currentBillingCycle?.month}
                         </p>
                       </div>
                       <div className="flex justify-between mt-2">
@@ -275,14 +279,14 @@ const CustomerInfo = () => {
                           Due Date
                         </p>
                         <p className="ext-gray-500 text-sm font-medium">
-                          30-11-2022
+                          {userInfo?.billingData?.currentBillingCycle?.due}
                         </p>
                       </div>
                     </div>
                   </div>
                 )}
 
-                {userInfo?.subscriptionUsage && (
+                {userInfo?.subscriptionUsage?.mobileDataUsed && (
                   <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
                     <div className="shadow-lg rounded-lg p-4 bg-white relative overflow-hidden">
                       <p className="text-gray-800 text-lg font-bold mb-2">
@@ -304,7 +308,7 @@ const CustomerInfo = () => {
                   </div>
                 )}
 
-                {userInfo?.subscriptionUsage && (
+                {userInfo?.subscriptionUsage?.callMinutesUsed && (
                   <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
                     <div className="shadow-lg rounded-lg p-4 bg-white relative overflow-hidden">
                       <p className="text-gray-800 text-lg font-bold mb-2">
@@ -326,7 +330,7 @@ const CustomerInfo = () => {
                   </div>
                 )}
 
-                {userInfo?.billingData?.length > 0 && (
+                {userInfo?.billingData?.pastBillingCycles?.length > 0 && (
                   <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
                     <div className="relative flex flex-col h-full min-w-0 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-lg bg-clip-border">
                       <div className="p-4 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
@@ -340,21 +344,23 @@ const CustomerInfo = () => {
                       </div>
                       <div className="flex-auto p-4 pb-0">
                         <ul className="flex flex-col pl-0 mb-0 rounded-lg">
-                          {userInfo?.billingData?.map((billingRecord) => (
-                            <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-t-inherit text-inherit rounded-lg">
-                              <div className="flex flex-col">
-                                <h6 className="mb-1 text-sm font-semibold leading-normal dark:text-white text-slate-700">
-                                  {`${billingRecord?.month} / ${billingRecord?.year}`}
-                                </h6>
-                                <span className="text-xs leading-tight dark:text-white dark:opacity-80">
-                                  {billingRecord?.status}
-                                </span>
-                              </div>
-                              <div className="flex items-center text-sm leading-normal dark:text-white/80">
-                                {currency.format(billingRecord?.amount)}
-                              </div>
-                            </li>
-                          ))}
+                          {userInfo?.billingData?.pastBillingCycles?.map(
+                            (billingRecord) => (
+                              <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-t-inherit text-inherit rounded-lg">
+                                <div className="flex flex-col">
+                                  <h6 className="mb-1 text-sm font-semibold leading-normal dark:text-white text-slate-700">
+                                    {`${billingRecord?.month} / ${billingRecord?.year}`}
+                                  </h6>
+                                  <span className="text-xs leading-tight dark:text-white dark:opacity-80">
+                                    {billingRecord?.status}
+                                  </span>
+                                </div>
+                                <div className="flex items-center text-sm leading-normal dark:text-white/80">
+                                  {currency.format(billingRecord?.amount)}
+                                </div>
+                              </li>
+                            )
+                          )}
                         </ul>
                       </div>
                     </div>
