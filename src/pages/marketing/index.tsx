@@ -146,7 +146,7 @@ const Marketing = () => {
                         {categories.map((category) => (
                           <span
                             key={category.id}
-                            className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
+                            className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
                             onClick={() => {
                               setIsCategoryDropdownOpen(false);
                               setSelectedCategory(category);
