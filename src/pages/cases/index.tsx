@@ -52,14 +52,14 @@ const Cases = () => {
           <div className="flex flex-wrap">
             {cases.map((item) => (
               <div className="w-full md:w-1/2 lg:w-1/4 pr-4 pb-4">
-                <div className="shadow-lg rounded-lg p-4 bg-white dark:bg-gray-700 w-full">
+                <div className="shadow-lg rounded-lg p-4 bg-white w-full">
                   <div className="flex justify-between mb-6">
                     <div className="flex items-center">
                       <div className="flex flex-col">
-                        <span className="font-bold text-md text-black dark:text-white ml-2">
+                        <span className="font-bold text-md text-black ml-2">
                           {item?.id}
                         </span>
-                        <span className="text-sm text-gray-500 dark:text-white ml-2">
+                        <span className="text-sm text-gray-500 ml-2">
                           {item?.description}
                         </span>
                       </div>

@@ -1,7 +1,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { AsgardeoAuthException, useAuthContext } from "@asgardeo/auth-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { FcCancel, FcOk } from "react-icons/fc";
 import Layout from "../../components/Layout";
@@ -24,37 +24,56 @@ const CustomerInfo = () => {
   const [isUserInfoError, setIsUserInfoError] = useState<boolean>();
   const [mobileNumber, setMobileNumber] = useState<string>();
 
-  const dataUsageData = {
-    labels: ["Used", "Remaining"],
-    datasets: [
-      {
-        label: "Data Usage",
-        data: [
-          userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage,
-          (userInfo?.subscriptionUsage?.subscription?.freeDataMB ?? 0) -
-            (userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage ?? 0),
-        ],
-        backgroundColor: ["rgb(230, 0, 0)", "rgb(101, 143, 241)"],
-        hoverOffset: 4,
-      },
-    ],
-  };
+  const dataUsageData = useMemo(() => {
+    if (
+      !userInfo?.subscriptionUsage?.usage ||
+      !userInfo?.subscriptionUsage?.usage[0]
+    ) {
+      return {};
+    }
 
-  const callUsageData = {
-    labels: ["Used", "Remaining"],
-    datasets: [
-      {
-        label: "Call Usage",
-        data: [
-          userInfo?.subscriptionUsage?.usage[0].allocatedMinutesUsage,
-          (userInfo?.subscriptionUsage?.subscription?.freeCallMinutes ?? 0) -
-            (userInfo?.subscriptionUsage?.usage[0].allocatedMinutesUsage ?? 0),
-        ],
-        backgroundColor: ["rgb(230, 0, 0)", "rgb(101, 143, 241)"],
-        hoverOffset: 4,
-      },
-    ],
-  };
+    return {
+      labels: ["Used", "Remaining"],
+      datasets: [
+        {
+          label: "Data Usage",
+          data: [
+            userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage,
+            (userInfo?.subscriptionUsage?.subscription?.freeDataMB ?? 0) -
+              (userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage ?? 0),
+          ],
+          backgroundColor: ["rgb(230, 0, 0)", "rgb(101, 143, 241)"],
+          hoverOffset: 4,
+        },
+      ],
+    };
+  }, [userInfo]);
+
+  const callUsageData = useMemo(() => {
+    if (
+      !userInfo?.subscriptionUsage?.usage ||
+      !userInfo?.subscriptionUsage?.usage[0]
+    ) {
+      return {};
+    }
+
+    return {
+      labels: ["Used", "Remaining"],
+      datasets: [
+        {
+          label: "Call Usage",
+          data: [
+            userInfo?.subscriptionUsage?.usage[0].allocatedMinutesUsage,
+            (userInfo?.subscriptionUsage?.subscription?.freeCallMinutes ?? 0) -
+              (userInfo?.subscriptionUsage?.usage[0].allocatedMinutesUsage ??
+                0),
+          ],
+          backgroundColor: ["rgb(230, 0, 0)", "rgb(101, 143, 241)"],
+          hoverOffset: 4,
+        },
+      ],
+    };
+  }, [userInfo]);
 
   const retrieveUserInfo = async () => {
     try {
@@ -78,7 +97,7 @@ const CustomerInfo = () => {
       {state.isAuthenticated && !state.isLoading ? (
         <Layout>
           <div className="mt-3 mb-10">
-            <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">
+            <label className="mb-2 text-sm font-medium text-gray-900 sr-only">
               Search
             </label>
 
@@ -86,7 +105,7 @@ const CustomerInfo = () => {
               <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <svg
                   aria-hidden="true"
-                  className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                  className="w-5 h-5 text-gray-500 "
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -103,13 +122,13 @@ const CustomerInfo = () => {
               <input
                 type="search"
                 id="default-search"
-                className="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Search via mobile"
                 onChange={(e) => setMobileNumber(e.target.value)}
                 required
               />
               <button
-                className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
                 onClick={retrieveUserInfo}
               >
                 {isUserInfoLoading && (
@@ -168,11 +187,11 @@ const CustomerInfo = () => {
               <>
                 {userInfo?.connectionStatus && (
                   <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
-                    <div className="shadow-lg rounded-lg p-4 bg-white dark:bg-gray-700 w-full">
+                    <div className="shadow-lg rounded-lg p-4 bg-white w-full">
                       <div className="flex justify-between mb-6">
                         <div className="flex items-center">
                           <div className="flex flex-col">
-                            <span className="font-bold text-lg text-black dark:text-white ml-2">
+                            <span className="font-bold text-lg text-black ml-2">
                               Connection Status
                             </span>
                             {(userInfo?.connectionStatus?.status).toUpperCase() ===
@@ -204,16 +223,16 @@ const CustomerInfo = () => {
 
                 {userInfo?.personalDetails && (
                   <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
-                    <div className="shadow-lg rounded-lg p-4 bg-white dark:bg-gray-700 w-full">
+                    <div className="shadow-lg rounded-lg p-4 bg-white w-full">
                       <div className="flex justify-between mb-6">
                         <div className="flex items-center">
                           <div className="flex flex-col">
-                            <span className="font-bold text-lg text-black dark:text-white ml-2">
+                            <span className="font-bold text-lg text-black ml-2">
                               Customer Information
                             </span>
                             {userInfo?.personalDetails?.phoneNumbers?.length >
                               0 && (
-                              <span className="mt-4 text-sm text-gray-500 dark:text-white ml-2">
+                              <span className="mt-4 text-sm text-gray-500 ml-2">
                                 Mobile Number :{" "}
                                 {
                                   userInfo?.personalDetails?.phoneNumbers[0]
@@ -221,7 +240,7 @@ const CustomerInfo = () => {
                                 }
                               </span>
                             )}
-                            <span className="mt-2 text-sm text-gray-500 dark:text-white ml-2">
+                            <span className="mt-2 text-sm text-gray-500 ml-2">
                               Name :{" "}
                               {`${userInfo?.personalDetails?.name?.givenName} ${userInfo?.personalDetails?.name?.familyName}`}
                             </span>
@@ -239,9 +258,7 @@ const CustomerInfo = () => {
                         Billing
                       </p>
                       <div className="flex justify-between mt-4">
-                        <p className="text-sm text-gray-500 dark:text-white">
-                          Outstanding
-                        </p>
+                        <p className="text-sm text-gray-500">Outstanding</p>
                         <p className="text-primary text-sm font-medium">
                           {currency.format(
                             userInfo?.billingData?.currentBillingCycle?.amount
@@ -249,17 +266,13 @@ const CustomerInfo = () => {
                         </p>
                       </div>
                       <div className="flex justify-between mt-2">
-                        <p className="text-sm text-gray-500 dark:text-white">
-                          Billing month
-                        </p>
+                        <p className="text-sm text-gray-500">Billing month</p>
                         <p className="ext-gray-500 text-sm font-medium">
                           {userInfo?.billingData?.currentBillingCycle?.month}
                         </p>
                       </div>
                       <div className="flex justify-between mt-2">
-                        <p className="text-sm text-gray-500 dark:text-white">
-                          Due Date
-                        </p>
+                        <p className="text-sm text-gray-500">Due Date</p>
                         <p className="ext-gray-500 text-sm font-medium">
                           {userInfo?.billingData?.currentBillingCycle?.due}
                         </p>
@@ -272,7 +285,8 @@ const CustomerInfo = () => {
                     <p className="text-gray-800 text-lg font-bold mb-2">
                       Data Usage
                     </p>
-                    {userInfo?.subscriptionUsage?.usage[0] &&
+                    {userInfo?.subscriptionUsage?.usage &&
+                    userInfo?.subscriptionUsage?.usage[0] &&
                     userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage ? (
                       <>
                         <p className="text-gray-500 text-md font-base my-4">
@@ -285,7 +299,8 @@ const CustomerInfo = () => {
                           </span>
                         </p>
                         <div className="px-16">
-                          <Doughnut data={dataUsageData} />
+                          {/* @ts-ignore */}
+                          {userInfo && <Doughnut data={dataUsageData} />}
                         </div>
                       </>
                     ) : (
@@ -301,7 +316,8 @@ const CustomerInfo = () => {
                     <p className="text-gray-800 text-lg font-bold mb-2">
                       Call Usage
                     </p>
-                    {userInfo?.subscriptionUsage?.usage[0] &&
+                    {userInfo?.subscriptionUsage?.usage &&
+                    userInfo?.subscriptionUsage?.usage[0] &&
                     userInfo?.subscriptionUsage?.usage[0]
                       .allocatedMinutesUsage ? (
                       <>
@@ -315,6 +331,7 @@ const CustomerInfo = () => {
                           </span>
                         </p>
                         <div className="px-16">
+                          {/* @ts-ignore */}
                           <Doughnut data={callUsageData} />
                         </div>
                       </>
@@ -328,11 +345,11 @@ const CustomerInfo = () => {
 
                 {userInfo?.billingData?.pastBillingCycles?.length > 0 && (
                   <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
-                    <div className="relative flex flex-col h-full min-w-0 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-lg bg-clip-border">
+                    <div className="relative flex flex-col h-full min-w-0 break-words bg-white border-0 border-transparent border-solid shadow-xl rounded-lg bg-clip-border">
                       <div className="p-4 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
                         <div className="flex flex-wrap -mx-3">
                           <div className="flex items-center flex-none w-1/2 max-w-full px-3">
-                            <span className="font-bold text-lg text-black dark:text-white ml-2">
+                            <span className="font-bold text-lg text-black ml-2">
                               Billing History
                             </span>
                           </div>
@@ -344,14 +361,14 @@ const CustomerInfo = () => {
                             (billingRecord) => (
                               <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-t-inherit text-inherit rounded-lg">
                                 <div className="flex flex-col">
-                                  <h6 className="mb-1 text-sm font-semibold leading-normal dark:text-white text-slate-700">
+                                  <h6 className="mb-1 text-sm font-semibold leading-normal text-slate-700">
                                     {`${billingRecord?.month} / ${billingRecord?.year}`}
                                   </h6>
-                                  <span className="text-xs leading-tight dark:text-white dark:opacity-80">
+                                  <span className="text-xs leading-tight">
                                     {billingRecord?.status}
                                   </span>
                                 </div>
-                                <div className="flex items-center text-sm leading-normal dark:text-white/80">
+                                <div className="flex items-center text-sm leading-normal">
                                   {currency.format(billingRecord?.amount)}
                                 </div>
                               </li>

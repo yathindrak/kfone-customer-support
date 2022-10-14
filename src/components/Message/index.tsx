@@ -49,10 +49,10 @@ const Message: FC<ChildProps> = ({ username, message }: ChildProps) => {
           </svg>
         </a>
         <div className="flex flex-col">
-          <span className="text-sm text-gray-900 font-semibold dark:text-white ml-2">
+          <span className="text-sm text-gray-900 font-semibold ml-2">
             {username}
           </span>
-          <span className="text-sm text-gray-400 dark:text-gray-300 ml-2">
+          <span className="text-sm text-gray-400 ml-2">
             {message}
           </span>
         </div>

@@ -27,7 +27,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed mt-4 m-auto ml-3 xl:ml-5 w-11/12 xl:w-3/4 shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-lg z-[999]">
+    <header className="fixed mt-4 m-auto ml-3 xl:ml-5 w-11/12 xl:w-3/4 shadow-lg bg-white items-center h-16 rounded-lg z-[999]">
       <div className="flex h-full px-3">
         <div className="justify-between items-center pl-2 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">
           {state?.displayName && state?.displayName.split(" ") && (
@@ -86,16 +86,16 @@ const Header = () => {
             {isOpen && (
               <div
                 id="dropdown"
-                className=" absolute right-1 z-10 w-44 bg-white rounded-lg divide-y divide-gray-100 shadow dark:bg-gray-700"
+                className=" absolute right-1 z-10 w-44 bg-white rounded-lg divide-y divide-gray-100 shadow"
               >
                 <ul
-                  className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                  className="py-1 text-sm text-gray-700"
                   aria-labelledby="dropdownDefault"
                 >
                   <li>
                     <span
                       onClick={handleLogout}
-                      className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      className="block py-2 px-4 hover:bg-gray-100"
                     >
                       Sign out
                     </span>

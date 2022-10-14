@@ -7,7 +7,7 @@ const SideBarMenuItem = ({ menuItem }: any) => {
     <>
       <li className="mt-0.5 w-full">
         <a
-          className={`p-3 bg-blue-500/13 dark:text-white dark:opacity-80 text-md
+          className={`p-3 bg-blue-500/13 text-md
             ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg 
             px-4 transition-colors
                   ${menuItem?.url === location?.pathname ? "bg-slate-200 font-semibold text-slate-700" : "font-base text-slate-700"}`}

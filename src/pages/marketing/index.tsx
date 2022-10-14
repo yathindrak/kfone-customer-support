@@ -161,7 +161,7 @@ const Marketing = () => {
                 </div>
 
                 <button
-                  className="text-white right-2.5 bottom-2.5 bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="text-white right-2.5 bottom-2.5 bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
                   onClick={retrieveInteractions}
                 >
                   {isUserInfoLoading && (
@@ -189,7 +189,7 @@ const Marketing = () => {
               <button
                 className={`flex text-white right-2.5 bottom-2.5 bg-primary focus:ring-4 
                 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 
-                py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+                py-2
                 ${
                   isUserInfoLoading || !userInfo ? `opacity-50` : `opacity-100`
                 }`}
@@ -210,13 +210,13 @@ const Marketing = () => {
           {isSentEmail && (
             <div
               className="absolute right-5 bottom-10 flex items-center p-4 space-x-4 w-full max-w-xs text-gray-500 bg-white 
-            rounded-lg divide-x divide-gray-500 shadow-lg dark:text-gray-400 dark:divide-gray-700 
-            space-x dark:bg-gray-800"
+            rounded-lg divide-x divide-gray-500 shadow-lg 
+            space-x"
               role="alert"
             >
               <svg
                 aria-hidden="true"
-                className="w-5 h-5 text-blue-600 dark:text-blue-500"
+                className="w-5 h-5 text-blue-600"
                 focusable="false"
                 data-prefix="fas"
                 data-icon="paper-plane"
@@ -240,15 +240,15 @@ const Marketing = () => {
               <div className="overflow-x-auto shadow-md sm:rounded-lg">
                 <div className="inline-block min-w-full align-middle">
                   <div className="overflow-hidden ">
-                    <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-                      <thead className="bg-gray-100 dark:bg-gray-700">
+                    <table className="min-w-full divide-y divide-gray-200 table-fixed">
+                      <thead className="bg-gray-100">
                         <tr>
                           <th scope="col" className="p-4">
                             <div className="flex items-center">
                               <input
                                 id="checkbox-all"
                                 type="checkbox"
-                                className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
                                 checked={isAllUsersChecked}
                                 onChange={() => {
                                   setIsAllUsersChecked(!isAllUsersChecked);
@@ -265,74 +265,74 @@ const Marketing = () => {
                           </th>
                           <th
                             scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
                           >
                             Email
                           </th>
                           <th
                             scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
                           >
                             Smartphone Visits
                           </th>
                           <th
                             scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
                           >
                             IOT Devices Visits
                           </th>
                           <th
                             scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
                           >
                             Mobile Subscription Visits
                           </th>
                           <th
                             scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
                           >
                             TV Subscription Visits
                           </th>
                           <th
                             scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
                           >
                             Interaction Score
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                      <tbody className="bg-white divide-y divide-gray-200">
                         {userInfo &&
                           userInfo.map((user, index) => (
-                            <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <tr className="hover:bg-gray-100">
                               <td className="p-4 w-4">
                                 <div className="flex items-center">
                                   <input
                                     id="checkbox-table-1"
                                     type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
                                     checked={checkedState[index]}
                                     onChange={() => handleOnChange(index)}
                                   />
                                   <label className="sr-only">checkbox</label>
                                 </div>
                               </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
                                 {user?.email}
                               </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                              <td className="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap">
                                 {user?.smartphoneVisits}
                               </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
                                 {user?.iotDevicesVisits}
                               </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
                                 {user?.mobileSubscriptionVisits}
                               </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
                                 {user?.tvSubscriptionVisits}
                               </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
                                 {user?.interactionScore}
                               </td>
                             </tr>

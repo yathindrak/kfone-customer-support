@@ -27,10 +27,10 @@ const menuItems = [
 const SideBar = () => {
   return (
     <div
-      className="w-64 fixed inset-y-0 antialiased transition-transform duration-200 -translate-x-full xl:translate-x-0 bg-white shadow-xl dark:shadow-none dark:bg-slate-850 z-990"
+      className="w-64 fixed inset-y-0 antialiased transition-transform duration-200 -translate-x-full xl:translate-x-0 bg-white shadow-xl z-990"
       aria-expanded="false"
     >
-      <div className="p-6 text-left text-md dark:text-white text-slate-700">
+      <div className="p-6 text-left text-md text-slate-700">
         <h1 className="flex items-center w-full text-primary text-4xl font-title">
           <>
             <GiCrossedAirFlows size={40} />
