@@ -30,9 +30,9 @@ const CustomerInfo = () => {
       {
         label: "Data Usage",
         data: [
-          userInfo?.subscriptionUsage?.mobileDataUsed,
+          userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage,
           (userInfo?.subscriptionUsage?.subscription?.freeDataMB ?? 0) -
-            (userInfo?.subscriptionUsage?.mobileDataUsed ?? 0),
+            (userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage ?? 0),
         ],
         backgroundColor: ["rgb(230, 0, 0)", "rgb(101, 143, 241)"],
         hoverOffset: 4,
@@ -46,36 +46,15 @@ const CustomerInfo = () => {
       {
         label: "Call Usage",
         data: [
-          userInfo?.subscriptionUsage?.callMinutesUsed,
+          userInfo?.subscriptionUsage?.usage[0].allocatedMinutesUsage,
           (userInfo?.subscriptionUsage?.subscription?.freeCallMinutes ?? 0) -
-            (userInfo?.subscriptionUsage?.callMinutesUsed ?? 0),
+            (userInfo?.subscriptionUsage?.usage[0].allocatedMinutesUsage ?? 0),
         ],
         backgroundColor: ["rgb(230, 0, 0)", "rgb(101, 143, 241)"],
         hoverOffset: 4,
       },
     ],
   };
-
-  useEffect(() => {
-    (async (): Promise<void> => {
-      try {
-        const now = Math.floor(Date.now() / 1000);
-        const decodedIDtoken = await getDecodedIDPIDToken();
-        const expiration = decodedIDtoken?.exp;
-        if (now > expiration && !query.get("code")) {
-          await signIn();
-        }
-      } catch (error) {
-        if (
-          (error as AsgardeoAuthException)?.code ===
-            "SPA-AUTH_CLIENT-VM-IV02" &&
-          !query.get("code")
-        ) {
-          await signIn();
-        }
-      }
-    })();
-  }, []);
 
   const retrieveUserInfo = async () => {
     try {
@@ -88,12 +67,15 @@ const CustomerInfo = () => {
     } catch (error) {
       setIsUserInfoLoading(false);
       setIsUserInfoError(true);
+      // Temp fix when token gets expired
+      sessionStorage.clear();
+      window.location.reload();
     }
   };
 
   return (
     <>
-      {state.isAuthenticated ? (
+      {state.isAuthenticated && !state.isLoading ? (
         <Layout>
           <div className="mt-3 mb-10">
             <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">
@@ -285,50 +267,64 @@ const CustomerInfo = () => {
                     </div>
                   </div>
                 )}
-
-                {userInfo?.subscriptionUsage?.mobileDataUsed && (
-                  <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
-                    <div className="shadow-lg rounded-lg p-4 bg-white relative overflow-hidden">
-                      <p className="text-gray-800 text-lg font-bold mb-2">
-                        Data Usage
-                      </p>
-                      <p className="text-gray-500 text-md font-base my-4">
-                        <span className="font-medium">
-                          {`${userInfo?.subscriptionUsage?.mobileDataUsed} MB`}
-                        </span>{" "}
-                        used of{" "}
-                        <span className="font-medium">
-                          {`${userInfo?.subscriptionUsage?.subscription?.freeDataMB} MB`}
-                        </span>
-                      </p>
-                      <div className="px-16">
-                        <Doughnut data={dataUsageData} />
-                      </div>
-                    </div>
+                <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
+                  <div className="shadow-lg rounded-lg p-4 bg-white relative overflow-hidden">
+                    <p className="text-gray-800 text-lg font-bold mb-2">
+                      Data Usage
+                    </p>
+                    {userInfo?.subscriptionUsage?.usage[0] &&
+                    userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage ? (
+                      <>
+                        <p className="text-gray-500 text-md font-base my-4">
+                          <span className="font-medium">
+                            {`${userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage} MB`}
+                          </span>{" "}
+                          used of{" "}
+                          <span className="font-medium">
+                            {`${userInfo?.subscriptionUsage?.subscription?.freeDataMB} MB`}
+                          </span>
+                        </p>
+                        <div className="px-16">
+                          <Doughnut data={dataUsageData} />
+                        </div>
+                      </>
+                    ) : (
+                      <span className="font-medium">
+                        No data packages are activated
+                      </span>
+                    )}
                   </div>
-                )}
+                </div>
 
-                {userInfo?.subscriptionUsage?.callMinutesUsed && (
-                  <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
-                    <div className="shadow-lg rounded-lg p-4 bg-white relative overflow-hidden">
-                      <p className="text-gray-800 text-lg font-bold mb-2">
-                        Call Usage
-                      </p>
-                      <p className="text-gray-500 text-md font-base my-4">
-                        <span className="font-medium">
-                          {`${userInfo?.subscriptionUsage?.callMinutesUsed} MB`}
-                        </span>{" "}
-                        used of{" "}
-                        <span className="font-medium">
-                          {`${userInfo?.subscriptionUsage?.subscription?.freeCallMinutes} MB`}
-                        </span>
-                      </p>
-                      <div className="px-16">
-                        <Doughnut data={callUsageData} />
-                      </div>
-                    </div>
+                <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">
+                  <div className="shadow-lg rounded-lg p-4 bg-white relative overflow-hidden">
+                    <p className="text-gray-800 text-lg font-bold mb-2">
+                      Call Usage
+                    </p>
+                    {userInfo?.subscriptionUsage?.usage[0] &&
+                    userInfo?.subscriptionUsage?.usage[0]
+                      .allocatedMinutesUsage ? (
+                      <>
+                        <p className="text-gray-500 text-md font-base my-4">
+                          <span className="font-medium">
+                            {`${userInfo?.subscriptionUsage?.usage[0].allocatedMinutesUsage} MB`}
+                          </span>{" "}
+                          used of{" "}
+                          <span className="font-medium">
+                            {`${userInfo?.subscriptionUsage?.subscription?.freeCallMinutes} MB`}
+                          </span>
+                        </p>
+                        <div className="px-16">
+                          <Doughnut data={callUsageData} />
+                        </div>
+                      </>
+                    ) : (
+                      <span className="font-medium">
+                        No voice packages are activated
+                      </span>
+                    )}
                   </div>
-                )}
+                </div>
 
                 {userInfo?.billingData?.pastBillingCycles?.length > 0 && (
                   <div className="w-full md:w-1/2 lg:w-1/3 pr-4 pb-4">

@@ -44,6 +44,20 @@ export type UserInfo = {
       freeCallMinutes: number;
       freeDataMB: number;
     };
+    usage: [
+      {
+        month: number;
+        year: number;
+        allocatedMinutesUsage: number;
+        allocatedDataUsage: number;
+        additionalPurchases: [
+          {
+            additionalData: number;
+            additionalMinutes: number;
+          }
+        ];
+      }
+    ];
   };
   billingData: {
     currentBillingCycle: {

@@ -43,32 +43,11 @@ const cases = [
 ];
 
 const Cases = () => {
-  const { state, signIn, getDecodedIDPIDToken } = useAuthContext();
-  const query = new URLSearchParams(useLocation().search);
-
-  useEffect(() => {
-
-    (async (): Promise<void> => {
-      try {
-        const now = Math.floor(Date.now() / 1000);
-        const decodedIDtoken = await getDecodedIDPIDToken();
-        const expiration = decodedIDtoken?.exp;
-        if (now > expiration && !query.get("code")){
-          await signIn();
-        }
-      } catch (error) {
-        if (
-          (error as AsgardeoAuthException)?.code === "SPA-AUTH_CLIENT-VM-IV02" &&  !query.get("code")
-        ) {
-          await signIn();
-        }
-      }
-    })();
-  }, []);
+  const { state } = useAuthContext();
 
   return (
     <>
-      {state.isAuthenticated ? (
+      {state.isAuthenticated && !state.isLoading ? (
         <Layout>
           <div className="flex flex-wrap">
             {cases.map((item) => (

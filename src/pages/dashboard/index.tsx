@@ -9,12 +9,10 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { AsgardeoAuthException, useAuthContext } from "@asgardeo/auth-react";
+import { useAuthContext } from "@asgardeo/auth-react";
 import Layout from "../../components/Layout";
 import Message from "../../components/Message";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
 import Loader from "../../components/Loader";
-import { useLocation, useParams } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -128,36 +126,11 @@ const messages = [
 ];
 
 const Dashboard = () => {
-  const { state, signIn, getDecodedIDPIDToken } =
-    useAuthContext();
-  const query = new URLSearchParams(useLocation().search);
-
-  useEffect(() => {
-
-    (async (): Promise<void> => {
-      try {
-        const now = Math.floor(Date.now() / 1000);
-        const decodedIDtoken = await getDecodedIDPIDToken();
-        const expiration = decodedIDtoken?.exp;
-        console.log(now > expiration)
-        if (now > expiration && !query.get("code")){
-          await signIn();
-        }
-      } catch (error) {
-        console.log("error occured", error)
-        if (
-          (error as AsgardeoAuthException)?.code === "SPA-AUTH_CLIENT-VM-IV02" &&  !query.get("code")
-        ) {
-          await signIn();
-        }
-      }
-    })();
-  }, []);
-  console.log(state)
+  const { state } = useAuthContext();
 
   return (
     <>
-      {state.isAuthenticated ? (
+      {state.isAuthenticated && !state.isLoading ? (
         <Layout>
           <div>
             <div className="overflow-auto h-screen pb-24 pt-2 pr-2 pl-2 md:pt-0 md:pr-0 md:pl-0">
