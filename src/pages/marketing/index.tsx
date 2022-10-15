@@ -192,10 +192,10 @@ const Marketing = () => {
                 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 
                 py-2
                 ${
-                  isUserInfoLoading || !userInfo ? `opacity-50` : `opacity-100`
+                  isUserInfoLoading || isUserInfoError || !userInfo ? `opacity-50` : `opacity-100`
                 }`}
                 onClick={sendEmail}
-                disabled={isUserInfoLoading || !userInfo}
+                disabled={isUserInfoLoading || isUserInfoError || !userInfo}
               >
                 Send Email <IoIosArrowForward size={20} />
               </button>
