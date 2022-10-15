@@ -78,6 +78,7 @@ const CustomerInfo = () => {
   const retrieveUserInfo = async () => {
     try {
       setIsUserInfoLoading(true);
+      setIsUserInfoError(false);
       const res = await httpRequest({
         url: `${process.env.REACT_APP_USER_INFO_ENDPOINT}/customer?mobile=${mobileNumber}`,
       });
@@ -87,8 +88,12 @@ const CustomerInfo = () => {
       setIsUserInfoLoading(false);
       setIsUserInfoError(true);
       // Temp fix when token gets expired
-      sessionStorage.clear();
-      window.location.reload();
+      // @ts-ignore
+      if (error?.response?.status === 401) {
+        // Temp fix when token gets expired
+        sessionStorage.clear();
+        window.location.reload();
+      }
     }
   };
 

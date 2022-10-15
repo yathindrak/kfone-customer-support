@@ -40,6 +40,7 @@ const Marketing = () => {
   const retrieveInteractions = async () => {
     try {
       setIsUserInfoLoading(true);
+      setIsUserInfoError(false);
       const res = await httpRequest({
         url: `${process.env.REACT_APP_BASE_API_ENDPOINT}/yphf/user-interactions-api/1.0.0/interactionsByCategory?category=${selectedCategory?.id}`,
       });
@@ -235,114 +236,140 @@ const Marketing = () => {
             </div>
           )}
 
-          {!isUserInfoLoading && userInfo && userInfo?.length > 0 && (
-            <div className="flex flex-col">
-              <div className="overflow-x-auto shadow-md sm:rounded-lg">
-                <div className="inline-block min-w-full align-middle">
-                  <div className="overflow-hidden ">
-                    <table className="min-w-full divide-y divide-gray-200 table-fixed">
-                      <thead className="bg-gray-100">
-                        <tr>
-                          <th scope="col" className="p-4">
-                            <div className="flex items-center">
-                              <input
-                                id="checkbox-all"
-                                type="checkbox"
-                                className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                checked={isAllUsersChecked}
-                                onChange={() => {
-                                  setIsAllUsersChecked(!isAllUsersChecked);
+          {isUserInfoError ? (
+            <div
+              className="bg-red-100 rounded-lg py-5 px-6 mb-3 text-base text-red-700 inline-flex items-center w-full"
+              role="alert"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fas"
+                data-icon="times-circle"
+                className="w-4 h-4 mr-2 fill-current"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+                ></path>
+              </svg>
+              No users found in the selected event type
+            </div>
+          ) : (
+            !isUserInfoLoading &&
+            userInfo &&
+            userInfo?.length > 0 && (
+              <div className="flex flex-col">
+                <div className="overflow-x-auto shadow-md sm:rounded-lg">
+                  <div className="inline-block min-w-full align-middle">
+                    <div className="overflow-hidden ">
+                      <table className="min-w-full divide-y divide-gray-200 table-fixed">
+                        <thead className="bg-gray-100">
+                          <tr>
+                            <th scope="col" className="p-4">
+                              <div className="flex items-center">
+                                <input
+                                  id="checkbox-all"
+                                  type="checkbox"
+                                  className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                  checked={isAllUsersChecked}
+                                  onChange={() => {
+                                    setIsAllUsersChecked(!isAllUsersChecked);
 
-                                  setCheckedState(
-                                    new Array(userInfo.length).fill(
-                                      !isAllUsersChecked
-                                    )
-                                  );
-                                }}
-                              />
-                              <label className="sr-only">checkbox</label>
-                            </div>
-                          </th>
-                          <th
-                            scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                          >
-                            Email
-                          </th>
-                          <th
-                            scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                          >
-                            Smartphone Visits
-                          </th>
-                          <th
-                            scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                          >
-                            IOT Devices Visits
-                          </th>
-                          <th
-                            scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                          >
-                            Mobile Subscription Visits
-                          </th>
-                          <th
-                            scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                          >
-                            TV Subscription Visits
-                          </th>
-                          <th
-                            scope="col"
-                            className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                          >
-                            Interaction Score
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        {userInfo &&
-                          userInfo.map((user, index) => (
-                            <tr className="hover:bg-gray-100">
-                              <td className="p-4 w-4">
-                                <div className="flex items-center">
-                                  <input
-                                    id="checkbox-table-1"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                    checked={checkedState[index]}
-                                    onChange={() => handleOnChange(index)}
-                                  />
-                                  <label className="sr-only">checkbox</label>
-                                </div>
-                              </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                {user?.email}
-                              </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap">
-                                {user?.smartphoneVisits}
-                              </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                {user?.iotDevicesVisits}
-                              </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                {user?.mobileSubscriptionVisits}
-                              </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                {user?.tvSubscriptionVisits}
-                              </td>
-                              <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                {user?.interactionScore}
-                              </td>
-                            </tr>
-                          ))}
-                      </tbody>
-                    </table>
+                                    setCheckedState(
+                                      new Array(userInfo.length).fill(
+                                        !isAllUsersChecked
+                                      )
+                                    );
+                                  }}
+                                />
+                                <label className="sr-only">checkbox</label>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
+                            >
+                              Email
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
+                            >
+                              Smartphone Visits
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
+                            >
+                              IOT Devices Visits
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
+                            >
+                              Mobile Subscription Visits
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
+                            >
+                              TV Subscription Visits
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
+                            >
+                              Interaction Score
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {userInfo &&
+                            userInfo.map((user, index) => (
+                              <tr className="hover:bg-gray-100">
+                                <td className="p-4 w-4">
+                                  <div className="flex items-center">
+                                    <input
+                                      id="checkbox-table-1"
+                                      type="checkbox"
+                                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                      checked={checkedState[index]}
+                                      onChange={() => handleOnChange(index)}
+                                    />
+                                    <label className="sr-only">checkbox</label>
+                                  </div>
+                                </td>
+                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                  {user?.email}
+                                </td>
+                                <td className="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap">
+                                  {user?.smartphoneVisits}
+                                </td>
+                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                  {user?.iotDevicesVisits}
+                                </td>
+                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                  {user?.mobileSubscriptionVisits}
+                                </td>
+                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                  {user?.tvSubscriptionVisits}
+                                </td>
+                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                  {user?.interactionScore}
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )
           )}
         </Layout>
       ) : (
