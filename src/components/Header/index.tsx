@@ -6,7 +6,6 @@ const Header = () => {
   const { signOut, state } = useAuthContext();
 
   const handleLogout = () => {
-    sessionStorage.removeItem("isAuth");
     signOut();
   };
 
@@ -95,7 +94,7 @@ const Header = () => {
                   <li>
                     <span
                       onClick={handleLogout}
-                      className="block py-2 px-4 hover:bg-gray-100"
+                      className="block py-2 px-4 hover:bg-gray-100 cursor-pointer"
                     >
                       Sign out
                     </span>
