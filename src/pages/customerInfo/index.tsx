@@ -303,7 +303,7 @@ const CustomerInfo = () => {
                             {`${userInfo?.subscriptionUsage?.subscription?.freeDataMB} MB`}
                           </span>
                         </p>
-                        <div className="px-16">
+                        <div className="px-8">
                           {/* @ts-ignore */}
                           {userInfo && <Doughnut data={dataUsageData} />}
                         </div>
@@ -335,7 +335,7 @@ const CustomerInfo = () => {
                             {`${userInfo?.subscriptionUsage?.subscription?.freeCallMinutes} MB`}
                           </span>
                         </p>
-                        <div className="px-16">
+                        <div className="px-8">
                           {/* @ts-ignore */}
                           <Doughnut data={callUsageData} />
                         </div>
