@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@asgardeo/auth-react": "^1.1.18",
-    "@asgardeo/token-exchange-plugin": "^0.1.5",
+    "@asgardeo/token-exchange-plugin": "^0.1.6",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.64",
     "@types/react": "^18.0.21",

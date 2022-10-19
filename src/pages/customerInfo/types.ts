@@ -1,3 +1,11 @@
+export type PastBillingCycle = {
+  year: number;
+  month: string;
+  amount: number;
+  due: string;
+  status: string;
+}
+
 export type UserInfo = {
   personalDetails: {
     emails: string[];
@@ -42,7 +50,7 @@ export type UserInfo = {
       id: number;
       connectionType: string;
       freeCallMinutes: number;
-      freeDataMB: number;
+      freeDataGB: number;
     };
     usage: [
       {
@@ -67,15 +75,10 @@ export type UserInfo = {
       due: string;
       status: string;
     };
-    pastBillingCycles: {
-      year: number;
-      month: string;
-      amount: number;
-      due: string;
-      status: string;
-    }[];
+    pastBillingCycles: PastBillingCycle[];
   };
   connectionStatus: {
     status: string;
+    reason?: string;
   };
 };

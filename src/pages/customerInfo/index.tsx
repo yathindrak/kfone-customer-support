@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import { FcCancel, FcOk } from "react-icons/fc";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
-import { UserInfo } from "./types";
+import { PastBillingCycle, UserInfo } from "./types";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -23,6 +23,7 @@ const CustomerInfo = () => {
   const [isUserInfoLoading, setIsUserInfoLoading] = useState<boolean>(false);
   const [isUserInfoError, setIsUserInfoError] = useState<boolean>();
   const [mobileNumber, setMobileNumber] = useState<string>();
+  const [billingHistory, setBillingHistory] = useState<PastBillingCycle[]>();
 
   const dataUsageData = useMemo(() => {
     if (
@@ -39,7 +40,7 @@ const CustomerInfo = () => {
           label: "Data Usage",
           data: [
             userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage,
-            (userInfo?.subscriptionUsage?.subscription?.freeDataMB ?? 0) -
+            (userInfo?.subscriptionUsage?.subscription?.freeDataGB ?? 0) -
               (userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage ?? 0),
           ],
           backgroundColor: ["rgb(230, 0, 0)", "rgb(101, 143, 241)"],
@@ -83,6 +84,7 @@ const CustomerInfo = () => {
         url: `${process.env.REACT_APP_USER_INFO_ENDPOINT}/customer?mobile=${mobileNumber}`,
       });
       setUserInfo(res?.data);
+      setBillingHistory(res?.data?.billingData?.pastBillingCycles?.reverse());
       setIsUserInfoLoading(false);
     } catch (error) {
       setIsUserInfoLoading(false);
@@ -210,14 +212,20 @@ const CustomerInfo = () => {
                                 </div>
                               </div>
                             ) : (
-                              <div className="rounded-lg border border-red-600 bg-white m-3 p-2">
-                                <div className="flex m-auto">
-                                  <p className="text-xl font-bold text-red-600 mr-1">
-                                    Inactive
-                                  </p>
-                                  <FcCancel size={25} />
+                              <>
+                                <div className="rounded-lg border border-red-600 bg-white m-3 p-2">
+                                  <div className="flex m-auto">
+                                    <p className="text-xl font-bold text-red-600 mr-1">
+                                      Inactive
+                                    </p>
+                                    <FcCancel size={25} />
+                                  </div>
                                 </div>
-                              </div>
+
+                                <span className="text-red-600 text-sm">
+                                  Reason: {userInfo?.connectionStatus?.reason}
+                                </span>
+                              </>
                             )}
                           </div>
                         </div>
@@ -296,11 +304,11 @@ const CustomerInfo = () => {
                       <>
                         <p className="text-gray-500 text-md font-base my-4">
                           <span className="font-medium">
-                            {`${userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage} MB`}
+                            {`${userInfo?.subscriptionUsage?.usage[0].allocatedDataUsage} GB`}
                           </span>{" "}
                           used of{" "}
                           <span className="font-medium">
-                            {`${userInfo?.subscriptionUsage?.subscription?.freeDataMB} MB`}
+                            {`${userInfo?.subscriptionUsage?.subscription?.freeDataGB} GB`}
                           </span>
                         </p>
                         <div className="px-8">
@@ -328,11 +336,11 @@ const CustomerInfo = () => {
                       <>
                         <p className="text-gray-500 text-md font-base my-4">
                           <span className="font-medium">
-                            {`${userInfo?.subscriptionUsage?.usage[0].allocatedMinutesUsage} MB`}
+                            {`${userInfo?.subscriptionUsage?.usage[0].allocatedMinutesUsage} Mins`}
                           </span>{" "}
                           used of{" "}
                           <span className="font-medium">
-                            {`${userInfo?.subscriptionUsage?.subscription?.freeCallMinutes} MB`}
+                            {`${userInfo?.subscriptionUsage?.subscription?.freeCallMinutes} Mins`}
                           </span>
                         </p>
                         <div className="px-8">
@@ -362,8 +370,8 @@ const CustomerInfo = () => {
                       </div>
                       <div className="flex-auto p-4 pb-0">
                         <ul className="flex flex-col pl-0 mb-0 rounded-lg">
-                          {userInfo?.billingData?.pastBillingCycles?.map(
-                            (billingRecord) => (
+                          {billingHistory &&
+                            billingHistory.map((billingRecord) => (
                               <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-t-inherit text-inherit rounded-lg">
                                 <div className="flex flex-col">
                                   <h6 className="mb-1 text-sm font-semibold leading-normal text-slate-700">
@@ -373,12 +381,17 @@ const CustomerInfo = () => {
                                     {billingRecord?.status}
                                   </span>
                                 </div>
-                                <div className="flex items-center text-sm leading-normal">
+                                <div
+                                  className={`flex items-center text-sm leading-normal ${
+                                    billingRecord?.status === "PENDING"
+                                      ? "text-primary"
+                                      : ""
+                                  }`}
+                                >
                                   {currency.format(billingRecord?.amount)}
                                 </div>
                               </li>
-                            )
-                          )}
+                            ))}
                         </ul>
                       </div>
                     </div>

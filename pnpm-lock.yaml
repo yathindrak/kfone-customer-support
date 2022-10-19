@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@asgardeo/auth-react': ^1.1.18
-  '@asgardeo/token-exchange-plugin': ^0.1.5
+  '@asgardeo/token-exchange-plugin': ^0.1.6
   '@types/jest': ^27.5.2
   '@types/node': ^16.11.64
   '@types/react': ^18.0.21
@@ -23,7 +23,7 @@ specifiers:
 
 dependencies:
   '@asgardeo/auth-react': 1.1.18_adbunsjzy45ovao6mgezt22nvy
-  '@asgardeo/token-exchange-plugin': 0.1.5
+  '@asgardeo/token-exchange-plugin': 0.1.6
   '@types/jest': 27.5.2
   '@types/node': 16.11.64
   '@types/react': 18.0.21
@@ -102,8 +102,8 @@ packages:
       - debug
     dev: false
 
-  /@asgardeo/token-exchange-plugin/0.1.5:
-    resolution: {integrity: sha512-GowyvD5ePsOinJcxiyTZLcAEibaa+/NCwakjuKCtQPLKLQRtw6pU/SS/7DNqvEo6MWgmiVrjoiEpSnw/5dB04Q==}
+  /@asgardeo/token-exchange-plugin/0.1.6:
+    resolution: {integrity: sha512-+7tEZs7ojCwyH0NJ0lEW/EdTfTdGdSds/gXdclWijOvdhj0Qwsg3bNfVYa5nWKpNKyhU9C3LqmEiKyKLRrIBvg==}
     dependencies:
       '@asgardeo/auth-spa': 0.4.9
     transitivePeerDependencies:
