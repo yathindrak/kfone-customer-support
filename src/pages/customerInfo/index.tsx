@@ -81,7 +81,7 @@ const CustomerInfo = () => {
       setIsUserInfoLoading(true);
       setIsUserInfoError(false);
       const res = await httpRequest({
-        url: `${process.env.REACT_APP_USER_INFO_ENDPOINT}/customer?mobile=${mobileNumber}`,
+        url: `${process.env.REACT_APP_BASE_API_ENDPOINT}/yphf/customer-360/1.0.0/customer?mobile=${mobileNumber}`,
       });
       setUserInfo(res?.data);
       setBillingHistory(res?.data?.billingData?.pastBillingCycles?.reverse());
