@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 
 type ChildProps = {
   username: string;
@@ -6,9 +6,16 @@ type ChildProps = {
 };
 
 const Message: FC<ChildProps> = ({ username, message }: ChildProps) => {
-  const fullName = username.split(" ");
-  // @ts-ignore
-  const initials = (fullName.shift().charAt(0) + fullName.pop().charAt(0)).toUpperCase();
+  const initials = useMemo(() => {
+    const fullName = username?.split(" ");
+
+    if(fullName !== undefined && fullName?.length > 0) {
+      // @ts-ignore - ts wrongly guess the full name might be undefined
+      return fullName.shift().charAt(0) + fullName.pop().charAt(0).toUpperCase();
+    }
+
+    return null;
+  }, [username]);
 
   return (
     <>
@@ -52,9 +59,7 @@ const Message: FC<ChildProps> = ({ username, message }: ChildProps) => {
           <span className="text-sm text-gray-900 font-semibold ml-2">
             {username}
           </span>
-          <span className="text-sm text-gray-400 ml-2">
-            {message}
-          </span>
+          <span className="text-sm text-gray-400 ml-2">{message}</span>
         </div>
       </li>
     </>

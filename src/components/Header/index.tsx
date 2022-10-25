@@ -76,8 +76,8 @@ const Header = () => {
                   dominant-baseline="middle"
                   fill="#ffffff"
                 >
-                  {/* @ts-ignore */}
-                  {state?.displayName?.split(" ") && (state.displayName.split(" ").shift().charAt(0) + state?.displayName.split(" ").pop().charAt(0)).toUpperCase()}
+                  {/* @ts-ignore - false positive type checking */}
+                  {state?.displayName?.split(" ") && (state?.displayName.split(" ").shift().charAt(0) + state?.displayName.split(" ").pop().charAt(0)).toUpperCase()}
                 </text>
               </svg>
             </button>

@@ -344,8 +344,7 @@ const CustomerInfo = () => {
                           </span>
                         </p>
                         <div className="px-8">
-                          {/* @ts-ignore */}
-                          <Doughnut data={callUsageData} />
+                          <Doughnut data={callUsageData as any} />
                         </div>
                       </>
                     ) : (
@@ -371,8 +370,9 @@ const CustomerInfo = () => {
                       <div className="flex-auto p-4 pb-0">
                         <ul className="flex flex-col pl-0 mb-0 rounded-lg">
                           {billingHistory &&
-                            billingHistory.map((billingRecord) => (
-                              <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-t-inherit text-inherit rounded-lg">
+                            billingHistory.map((billingRecord, index) => (
+                              // TODO: add random key over the index
+                              <li key={index} className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-t-inherit text-inherit rounded-lg">
                                 <div className="flex flex-col">
                                   <h6 className="mb-1 text-sm font-semibold leading-normal text-slate-700">
                                     {`${billingRecord?.month} / ${billingRecord?.year}`}

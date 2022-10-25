@@ -1,6 +1,5 @@
-import { AsgardeoAuthException, useAuthContext } from "@asgardeo/auth-react";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useAuthContext } from "@asgardeo/auth-react";
+import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
@@ -44,7 +43,7 @@ const Marketing = () => {
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Category>();
   const [isAllUsersChecked, setIsAllUsersChecked] = useState<boolean>();
-  const [checkedState, setCheckedState] = useState(new Array().fill(true));
+  const [checkedState, setCheckedState] = useState(new Array<boolean>().fill(true));
   const [isSentEmail, setIsSentEmail] = useState(false);
 
   const retrieveInteractions = async () => {
@@ -58,8 +57,7 @@ const Marketing = () => {
       setCheckedState(new Array(res?.data?.length).fill(true));
       setIsUserInfoLoading(false);
       setIsAllUsersChecked(true);
-    } catch (error) {
-      // @ts-ignore
+    } catch (error: any) {
       if (error?.response?.status === 401) {
         // Temp fix when token gets expired
         sessionStorage.clear();
@@ -73,8 +71,7 @@ const Marketing = () => {
   const sendEmail = async () => {
     let audience: User[] = [];
     checkedState.map((item, index) => {
-      if (item === true) {
-        // @ts-ignore
+      if (item === true && userInfo) {
         const user = userInfo[index];
         user && audience.push(user);
       }

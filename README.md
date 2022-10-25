@@ -1,41 +1,57 @@
-# Getting Started with Create React App
+# Kfone Customer Support
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Customer Support portal of the Kfone demo telecommunication company.
 
-## Available Scripts
+## Prerequisites
 
-In the project directory, you can run:
+Install Node.JS LTS from https://nodejs.org/en/download/. Then install **pnpm** as the package manager from https://pnpm.io/installation.
 
-### `npm start`
+Verify if you have the LTS version installed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+node -v # should be something like v16.x
+npm -v # should be something like v8.x
+pnpm -v # should be something like v7.x
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Setup
 
-### `npm run build`
+```bash
+git clone git@github.com:yathindrak/kfone-customer-support.git
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+cd customer-support
+```
+&nbsp;
+##### Let's setup the environment variables.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Get a copy of the `.env.example` file and rename it as .env. Then change the below values, as per the description provided in each .env variable.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```json
+NODE_ENV=development
+REACT_APP_ASGARDEO_CLIENT_ID=<CLIENT ID TAKEN FROM ASGARDEO CONSOLE>
+REACT_APP_ASGARDEO_BASE_URL=<BASE URL TAKEN FROM ASGARDEO CONSOLE>
+REACT_APP_ASGARDEO_CALLBACK_URL=<CALLBACK URL AFTER A SUCCESSFUL AUTHENTICATION>
+REACT_APP_CHOREO_CLIENT_ID=<CONSUMER ID TAKEN FROM ASGARDEO CONSOLE>
+REACT_APP_BASE_API_ENDPOINT=<BASE URL OF CHOREO HOSTED API>
+REACT_APP_CHOREO_ORGANIZATION=<ORGANIZATION OF CHOREO HOSTED API>
+REACT_APP_CHOREO_TOKEN_ENDPOINT=<CHOREO TOKEN ENDPOINT>
+```
 
-### `npm run eject`
+PS: If you want to deploy this app(eg. vercel), make sure you added the relevent environment variables there as well. In this case, the `REACT_APP_ASGARDEO_CALLBACK_URL` should be changed based on the web app domain name.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Install Dependencies
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+From the project root, install dependencies using the below command.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+pnpm install
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Bootstrap Application
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+pnpm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The application should be up and running in port 3000 🎉

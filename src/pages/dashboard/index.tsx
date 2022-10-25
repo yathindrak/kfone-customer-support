@@ -7,6 +7,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useAuthContext } from "@asgardeo/auth-react";
@@ -24,7 +25,7 @@ ChartJS.register(
   Legend
 );
 
-const options = {
+const options: ChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -147,8 +148,7 @@ const Dashboard = () => {
                       </p>
                     </div>
                     <div className="flex-auto h-96">
-                      {/* @ts-ignore */}
-                      <Line options={options} data={data} />
+                      <Line options={options as any} data={data} />
                     </div>
                   </div>
                 </div>

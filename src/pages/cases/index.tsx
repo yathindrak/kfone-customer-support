@@ -51,7 +51,7 @@ const Cases = () => {
         <Layout>
           <div className="flex flex-wrap">
             {cases.map((item) => (
-              <div className="w-full md:w-1/2 lg:w-1/4 pr-4 pb-4">
+              <div key={item?.id} className="w-full md:w-1/2 lg:w-1/4 pr-4 pb-4">
                 <div className="shadow-lg rounded-lg p-4 bg-white w-full">
                   <div className="flex justify-between mb-6">
                     <div className="flex items-center">

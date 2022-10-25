@@ -3,7 +3,6 @@ import {
   FcComboChart,
   FcCustomerSupport,
   FcViewDetails,
-  FcServices,
   FcSalesPerformance
 } from "react-icons/fc";
 import SideBarMenuItem from "../SideBarMenuItem";
@@ -20,8 +19,7 @@ const menuItems = [
     name: "Marketing",
     icon: <FcSalesPerformance size={20} />,
     url: "/marketing",
-  },
-  // { name: "Services", icon: <FcServices size={20} />, url: "/services" },
+  }
 ];
 
 const SideBar = () => {
@@ -43,7 +41,7 @@ const SideBar = () => {
 
       <ul className="flex flex-col">
         {menuItems.map((menuItem) => (
-          <SideBarMenuItem menuItem={menuItem} />
+          <SideBarMenuItem key={menuItem?.name} menuItem={menuItem} />
         ))}
       </ul>
     </div>
