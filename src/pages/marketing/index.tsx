@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
+import Button from "../../components/Button";
 
 type Category = {
   id: string;
@@ -19,6 +20,22 @@ type User = {
   interactionScore: number;
 };
 
+const marketingTableHeaderTitles: string[] = [
+  "Email",
+  "Smartphone Visits",
+  "IOT Devices Visits",
+  "Mobile Subscription Visits",
+  "TV Subscription Visits",
+  "Interaction Score",
+];
+
+const categories: Category[] = [
+  { id: "smartphone_visits", name: "Smartphone Visits" },
+  { id: "iot_devices_visits", name: "IOT Device Visits" },
+  { id: "mobile_subscription_visits", name: "Mobile Subscription Visits" },
+  { id: "tv_subscription_visits", name: "TV subscription Visits" },
+];
+
 const Marketing = () => {
   const { state, httpRequest } = useAuthContext();
   const [userInfo, setUserInfo] = useState<User[]>();
@@ -29,13 +46,6 @@ const Marketing = () => {
   const [isAllUsersChecked, setIsAllUsersChecked] = useState<boolean>();
   const [checkedState, setCheckedState] = useState(new Array().fill(true));
   const [isSentEmail, setIsSentEmail] = useState(false);
-
-  const categories: Category[] = [
-    { id: "smartphone_visits", name: "Smartphone Visits" },
-    { id: "iot_devices_visits", name: "IOT Device Visits" },
-    { id: "mobile_subscription_visits", name: "Mobile Subscription Visits" },
-    { id: "tv_subscription_visits", name: "TV subscription Visits" },
-  ];
 
   const retrieveInteractions = async () => {
     try {
@@ -108,7 +118,7 @@ const Marketing = () => {
         <Layout>
           <div className="mt-3 mb-10">
             <div className="flex justify-between">
-              <div>
+              <div className="flex">
                 <div className="relative inline-block text-left w-58 mr-5">
                   <button
                     type="button"
@@ -161,9 +171,10 @@ const Marketing = () => {
                   )}
                 </div>
 
-                <button
-                  className="text-white right-2.5 bottom-2.5 bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
-                  onClick={retrieveInteractions}
+                <Button
+                  classNames="right-2.5 bottom-2.5"
+                  isDisabled={false}
+                  onButtonClick={retrieveInteractions}
                 >
                   {isUserInfoLoading && (
                     <svg
@@ -184,21 +195,15 @@ const Marketing = () => {
                     </svg>
                   )}
                   Search Users
-                </button>
+                </Button>
               </div>
 
-              <button
-                className={`flex text-white right-2.5 bottom-2.5 bg-primary focus:ring-4 
-                focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 
-                py-2
-                ${
-                  isUserInfoLoading || isUserInfoError || !userInfo ? `opacity-50` : `opacity-100`
-                }`}
-                onClick={sendEmail}
-                disabled={isUserInfoLoading || isUserInfoError || !userInfo}
+              <Button
+                isDisabled={isUserInfoLoading || isUserInfoError || !userInfo}
+                onButtonClick={sendEmail}
               >
                 Send Email <IoIosArrowForward size={20} />
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -289,42 +294,14 @@ const Marketing = () => {
                                 <label className="sr-only">checkbox</label>
                               </div>
                             </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                            >
-                              Email
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                            >
-                              Smartphone Visits
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                            >
-                              IOT Devices Visits
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                            >
-                              Mobile Subscription Visits
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                            >
-                              TV Subscription Visits
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
-                            >
-                              Interaction Score
-                            </th>
+                            {marketingTableHeaderTitles.map((headerTitle) => (
+                              <th
+                                scope="col"
+                                className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase"
+                              >
+                                {headerTitle}
+                              </th>
+                            ))}
                           </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
